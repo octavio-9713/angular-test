@@ -39,10 +39,7 @@ export class TripDetailComponent implements OnInit {
       endDate: ['', [Validators.required]],
     });
     busService.findAll().subscribe(buses => this.buses = buses);
-    personService.findAll().subscribe(persons => {
-      this.availablePersons = persons;
-      console.log(this.availablePersons);
-    });
+
   }
 
   ngOnInit() {
@@ -60,23 +57,32 @@ export class TripDetailComponent implements OnInit {
             startDate: moment(trip.startDate * 1000),
             endDate: moment(trip.endDate * 1000),
           });
-          this.tripForm.get('passengers').value.forEach(persona => {
-            let esta = false;
-            for (const p of this.availablePersons) {
-              if (persona.id === p.id) {
-                esta = true;
-                break;
+
+          this.personService.findAll().subscribe(persons => {
+            this.availablePersons = persons;
+
+            this.tripForm.get('passengers').value.forEach(persona => {
+              let esta = false;
+              for (const p of this.availablePersons) {
+                if (persona.id === p.id) {
+                  esta = true;
+                  break;
+                }
               }
-            }
-            if (esta) {
-              const index = this.availablePersons.findIndex(p => p.id === persona.id);
-              this.availablePersons.splice(index, 1);
-            }
+              if (esta) {
+                const index = this.availablePersons.findIndex(p => p.id === persona.id);
+                this.availablePersons.splice(index, 1);
+              }
+            });
+            this.addedElemets = this.tripForm.get('passengers').value;
           });
-          this.addedElemets = this.tripForm.get('passengers').value;
         });
       } else {
         this.titulo = 'Crear Viaje';
+        this.personService.findAll().subscribe(persons => {
+          this.availablePersons = persons;
+          console.log(this.availablePersons);
+        });
       }
     });
   }
