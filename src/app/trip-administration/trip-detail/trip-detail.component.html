@@ -1,0 +1,125 @@
+<mat-card style="margin-top: 20px; margin-bottom: 20px; width: 600px;">
+
+  <mat-card-header>
+    <span style="font-size: 25px">{{titulo}}</span>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content style="margin-top: 10px;">
+    <form [formGroup]="tripForm" (ngSubmit)="saveData()" novalidate>
+
+      <p>
+        <mat-form-field appearance="outline" style="margin-right: 15%; width: 236px">
+          <mat-label>Lugar de Salida</mat-label>
+          <input matInput placeholder="Racoon City" type="text" formControlName="departure" style="font-size: 14px">
+          <mat-error *ngIf="(errorDeparture() && tripForm.controls.departure.errors.required)">
+            El lugar de Salida es requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 236px">
+          <mat-label>Lugar de Destino</mat-label>
+          <input matInput placeholder="Midgard" type="text" formControlName="destination" style="font-size: 14px">
+          <mat-error *ngIf="(errorDestination() && tripForm.controls.destination.errors.required)">
+            El destino es requerido
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" style="margin-right: 15%;">
+          <mat-label>Fecha de Salida</mat-label>
+          <input formControlName="startDate" matInput [matDatepicker]="startDate" style="font-size: 14px"
+                 [max]="this.tripForm.get('endDate').value" >
+          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+          <mat-datepicker #startDate></mat-datepicker>
+          <mat-error *ngIf="(errorStart() && tripForm.controls.startDate.errors.required)">
+            La fecha de salida es requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" style="width: 236px">
+          <mat-label>Fecha de Llegada</mat-label>
+          <input formControlName="endDate"  matInput [matDatepicker]="endDate"
+                 [min]="this.tripForm.get('startDate').value" style="font-size: 14px">
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
+          <mat-error *ngIf="(errorEnd() && tripForm.controls.endDate.errors.required)">
+            La fecha de llegada es requerida
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" style="width: 236px">
+          <mat-label>Colectivo</mat-label>
+          <mat-select formControlName="bus" [compareWith]="compareWith">
+            <mat-option>Seleccione una Colectivo</mat-option>
+            <mat-option *ngFor="let bus of buses" [value]="bus">
+              {{bus.brandName() + ': ' + bus.modelName() + ' (' + bus.numberOfSeats +' Asientos)'}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="(errorBus() && tripForm.controls.bus.errors.required)">
+            El colectivo es requerido
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-accordion>
+          <mat-expansion-panel>
+
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Listado de Pasajeros
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="selector-person">
+              <mat-label class="selector-title">Personas Disponibles</mat-label>
+
+              <div class="scrolleable">
+                <mat-selection-list #availables [formControl]="selectedPersonsControl">
+                  <mat-list-option *ngFor="let person of availablePersons" [value]="person">
+                    {{person.firstName + " " + person.lastName}}
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
+            </div>
+
+            <div style="width: 20%; display: inline-block">
+              <button mat-icon-button (click)="addAvailable()" type="button" class="selector-buttons" color="white">
+                <mat-icon fontSet="fas" fontIcon="fa-forward" style="font-size: 35px;"></mat-icon>
+              </button>
+
+            </div>
+
+            <div class="selector-person">
+              <mat-label class="selector-title">Personas Seleccionadas</mat-label>
+
+              <div class="scrolleable">
+                <mat-selection-list formControlName="passengers" #selected (selectionChange)="removeSelected()">
+                  <mat-list-option *ngFor="let person of passengers()" [value]="person">
+                    {{person.firstName + " " + person.lastName}}
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </p>
+
+      <!--      <mat-form-field appearance="outline">-->
+      <!--        <mat-label></mat-label>-->
+      <!--        <input matInput placeholder="" type="text" formControlName="" style="font-size: 14px">-->
+      <!--        <mat-error *ngIf="()">-->
+
+      <!--        </mat-error>-->
+      <!--      </mat-form-field>-->
+
+      <button mat-raised-button type="submit" [disabled]="tripForm.invalid">Save</button>
+    </form>
+  </mat-card-content>
+</mat-card>

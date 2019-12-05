@@ -1,0 +1,49 @@
+<mat-card style="margin-top: 20px; margin-bottom: 20px">
+
+  <mat-card-header>
+    <span style="font-size: 25px">{{titulo}}</span>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content style="margin-top: 10px">
+    <form [formGroup]="personForm" (ngSubmit)="saveData()" novalidate>
+
+        <mat-form-field appearance="outline" style="margin-right: 30px">
+          <mat-label>Ingrese su Nombre</mat-label>
+          <input matInput placeholder="pepito" type="text" formControlName="firstName" style="font-size: 14px">
+          <mat-error *ngIf="(errorNombre() && personForm.controls.firstName.errors.required)">
+            Nombre Es Requerido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ingrese su Apellido</mat-label>
+          <input matInput placeholder="gomez" type="text" formControlName="lastName" style="font-size: 14px">
+          <mat-error *ngIf="(errorApellido() && personForm.controls.lastName.errors.required)">
+            Apellido Es Requerido
+          </mat-error>
+          <mat-hint>La Longintud maxima es de 100 chars</mat-hint>
+        </mat-form-field>
+
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Ingrese su Edad</mat-label>
+            <input matInput placeholder="12" type="number" formControlName="age" style="font-size: 14px">
+            <mat-hint>La edad puede ir de 0 a 99</mat-hint>
+            <mat-error *ngIf="(errorEdad() && personForm.controls.age.errors.required)">
+              Edad es requerido
+            </mat-error>
+            <mat-error *ngIf="(errorEdad() && personForm.controls.age.errors.min)">
+              Edad es menor a 0
+            </mat-error>
+            <mat-error *ngIf="(errorEdad() && personForm.controls.age.errors.max)">
+              Edad es mayor a 99
+            </mat-error>
+          </mat-form-field>
+        </p>
+
+        <button mat-raised-button type="submit" [disabled]="personForm.invalid">Save</button>
+    </form>
+  </mat-card-content>
+</mat-card>

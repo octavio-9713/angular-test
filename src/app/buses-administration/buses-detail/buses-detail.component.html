@@ -1,0 +1,74 @@
+<mat-card style="margin-top: 20px; margin-bottom: 20px; width: 500px;">
+
+  <mat-card-header>
+    <span style="font-size: 25px">{{titulo}}</span>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content style="margin-top: 10px;">
+    <form [formGroup]="busForm" (ngSubmit)="saveData()" novalidate>
+
+      <p>
+        <mat-form-field appearance="outline" style="margin-right: 50px;">
+          <mat-label>Patente</mat-label>
+          <input matInput placeholder="SN4K3" type="text" formControlName="licensePlate" style="font-size: 14px">
+          <mat-error *ngIf="(errorPatente() && busForm.controls.licensePlate.errors.required)">
+            La Patente es Requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de Asientos</mat-label>
+          <input matInput placeholder="12" type="number" formControlName="numberOfSeats" style="font-size: 14px">
+          <mat-hint>Debe ser Mayor a 0</mat-hint>
+          <mat-error *ngIf="(errorAsientos() && busForm.controls.numberOfSeats.errors.required)">
+            La cantidad de Asientos es requerida
+          </mat-error>
+          <mat-error *ngIf="(errorAsientos() && busForm.controls.numberOfSeats.errors.min)">
+            La cantidad de asientos es menor a 0
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" style="margin-right: 50px;">
+          <mat-label>Marca</mat-label>
+          <mat-select [formControl]="brandControl" [compareWith]="compareWith"
+                      (selectionChange)="updateModels()" >
+            <mat-option>Seleccione una Marca</mat-option>
+            <mat-option *ngFor="let brand of brands" [value]="brand">
+              {{brand.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="(brandControl.hasError('required'))">
+            La Marca es Requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="brandControl.value != null">
+          <mat-label>Modelos</mat-label>
+          <mat-select formControlName="model" [compareWith]="compareWith"  (selectionChange)="selectedModel()">
+            <mat-option>Seleccione un Modelo</mat-option>
+            <mat-option *ngFor="let model of models" [value]="model">
+              {{model.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="((errorModel() && busForm.controls.model.errors.required))">
+            El modelo Es Requerido
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+<!--      <mat-form-field appearance="outline">-->
+<!--        <mat-label></mat-label>-->
+<!--        <input matInput placeholder="" type="text" formControlName="" style="font-size: 14px">-->
+<!--        <mat-error *ngIf="()">-->
+
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+
+      <button mat-raised-button type="submit" [disabled]="busForm.invalid">Save</button>
+    </form>
+  </mat-card-content>
+</mat-card>

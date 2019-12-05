@@ -1,0 +1,70 @@
+<div class="toolbar" role="banner">
+  <img
+    width="40"
+    alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+  />
+  <span>Welcome</span>
+  <div class="spacer"></div>
+
+  <button mat-icon-button (click)="logOut()" color="white" style="margin-right: 20px">
+    <mat-icon fontSet="fas" fontIcon="fa-power-off" style="font-size: 35px;"></mat-icon>
+  </button>
+
+</div>
+
+<!-- SideBar -->
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" class="example-sidenav"
+               [fixedTopGap]="35" [opened]="true"
+               [fixedInViewport]="false">
+
+    <a mat-button routerLink="/home/dashboard" class="expansion-style fake-option">
+      DashBoard <mat-icon style="margin-left: 10px" fontSet="fas" fontIcon="fa-home"></mat-icon>
+    </a>
+
+    <mat-expansion-panel class="expansion-style" style="padding: 0">
+
+      <mat-expansion-panel-header style="color: rgb(68, 68, 68);">
+        Administracion de Personas <mat-icon style="margin-left: 10px" fontSet="fas" fontIcon="fa-user"></mat-icon>
+      </mat-expansion-panel-header>
+
+      <a mat-button routerLink="/home/persona/list" class="option-button">Listado de Personas</a>
+      <a mat-button routerLink="/home/persona/create" class="option-button">Crear una Persona</a>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="expansion-style" style="padding: 0">
+
+      <mat-expansion-panel-header style="color: rgb(68, 68, 68);">
+        Administracion de Buses  <mat-icon style="margin-left: 10px" fontSet="fas" fontIcon="fa-bus"></mat-icon>
+      </mat-expansion-panel-header>
+
+      <a mat-button routerLink="/home/bus/list" class="option-button">Listado de Buses</a>
+      <a mat-button routerLink="/home/bus/create" class="option-button">Crear un Bus</a>
+
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="expansion-style" style="padding: 0">
+
+      <mat-expansion-panel-header style="color: rgb(68, 68, 68);">
+        Administracion de Viajes  <mat-icon style="margin-left: 10px" fontSet="fas" fontIcon="fa-suitcase-rolling"></mat-icon>
+      </mat-expansion-panel-header>
+
+      <a mat-button routerLink="/home/trip/list" class="option-button">Listado de Viajes</a>
+      <a mat-button routerLink="/home/trip/create" class="option-button">Crear un viaje</a>
+
+
+    </mat-expansion-panel>
+
+
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content" style="margin: 0;">
+
+    <!-- Resources -->
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

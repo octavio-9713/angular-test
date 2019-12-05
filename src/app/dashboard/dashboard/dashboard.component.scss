@@ -1,0 +1,29 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+.box-style{
+  width: 800px;
+  margin-top: 20px;
+  background: unset;
+  box-shadow: unset;
+}
+
+.overview-box{
+  width: 80%;
+  height: 60%;
+  text-align: center;
+  text-decoration: unset;
+  color:#572020;
+}
+
+.blue-box{
+  background: radial-gradient(#2c5cc540, #0b47cebd);
+}
+
+.green-box{
+  background: radial-gradient(#3fb35340, #59e412bd);
+}
+
+.black-box{
+  background: radial-gradient(#34415d40, #000000bd);
+}
+

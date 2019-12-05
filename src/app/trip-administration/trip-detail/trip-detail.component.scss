@@ -1,0 +1,27 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+.selector-person{
+  width: 40%;
+  display: inline-block;
+}
+
+.scrolleable{
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.selector-title{
+  font-weight: bold;
+  font-size: 16px;
+  border-bottom: 1px solid;
+}
+
+.selector-buttons{
+  margin: 5px 10px;
+  position: relative;
+  bottom: 150px;
+}
+
+.selector-buttons:hover{
+  color: rgba(0, 0, 0, 0.67);
+}

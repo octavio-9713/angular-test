@@ -1,0 +1,61 @@
+<mat-card style="margin-top: 20px; margin-bottom: 20px">
+
+  <button mat-icon-button (click)="goToCreate()" color="accent" style="float: right">
+    <mat-icon fontSet="fas" fontIcon="fa-plus-circle" style="font-size: 35px;"></mat-icon>
+  </button>
+
+  <mat-card-header>
+    <span style="font-size: 25px">Listado de Colectivos</span>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+
+    <table mat-table [dataSource]="buses" style="min-width: 800px;">
+
+      <!--Cada Container es una pregunta-->
+      <ng-container matColumnDef="licence">
+        <th mat-header-cell *matHeaderCellDef> Patente </th>
+        <td mat-cell *matCellDef="let bus"> {{bus.licensePlate }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <th mat-header-cell *matHeaderCellDef> Modelo </th>
+        <td mat-cell *matCellDef="let bus"> {{ bus.modelName() }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef> Marca </th>
+        <td mat-cell *matCellDef="let bus"> {{ bus.brandName() }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="seats">
+        <th mat-header-cell *matHeaderCellDef> Nro. Asientos </th>
+        <td mat-cell *matCellDef="let bus"> {{ bus.numberOfSeats }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef> Opciones </th>
+        <td mat-cell *matCellDef="let bus">
+
+          <button mat-icon-button (click)="goToDetail(bus)">
+            <mat-icon fontSet="fas" fontIcon="fa-pencil-alt"></mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="borrarBus(bus)">
+            <mat-icon fontSet="fas" fontIcon="fa-trash"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+      <!--Esto es para mostrar las columnas previamente definidas. El primero arma los header y el segundo las columnas-->
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
