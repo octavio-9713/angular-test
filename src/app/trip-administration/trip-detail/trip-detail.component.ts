@@ -93,9 +93,21 @@ export class TripDetailComponent implements OnInit {
     this.tripForm.get('endDate').setValue(this.tripForm.get('endDate').value.unix());
     this.tripForm.get('startDate').setValue(this.tripForm.get('startDate').value.unix());
 
+    // Elimina el exceso en caso de haber
+    if (this.tripForm.get('bus').value.numberOfSeats <  this.tripForm.get('passengers').value.length) {
+      this.tripForm.get('passengers').setValue(
+        this.tripForm.get('passengers').value.slice(0, this.tripForm.get('bus').value.numberOfSeats ));
+
+      this._snackBar.open('Se eliminaron algunos pasajeros ya que superan la cantidad Maxima', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    }
+
     const trip = new Trip(this.tripForm.value);
     console.log('Guardando Viaje: ');
     console.log(trip);
+
     this.tripService.actualizarTrip(trip).pipe(catchError(err => {
       console.log('Ocurrio un error: ', err);
 
@@ -106,6 +118,8 @@ export class TripDetailComponent implements OnInit {
 
       this.tripForm.get('endDate').setValue(moment(this.tripForm.get('endDate').value * 1000));
       this.tripForm.get('startDate').setValue(moment(this.tripForm.get('startDate').value * 1000));
+
+      this.removeSelected();
 
       return throwError('No se pudo completar la operacion');
     }))
